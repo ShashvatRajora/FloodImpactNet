@@ -1,0 +1,18 @@
+{
+  "sample_id": "294583",
+  "module1": {
+    "threshold": 0.5,
+    "probability_preview": "assets/module1-probability.png",
+    "mask_preview": "assets/module1-mask.png"
+  },
+  "module2": {
+    "pre_probability": "assets/module2-pre-probability.png",
+    "post_probability": "assets/module2-post-probability.png",
+    "change_map": "assets/module2-change.png"
+  },
+  "module3": {
+    "pre_uncertainty": "assets/module3-pre-uncertainty.png",
+    "post_uncertainty": "assets/module3-post-uncertainty.png",
+    "post_classes": "assets/module3-post-classes.png"
+  }
+}
