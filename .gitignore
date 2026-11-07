@@ -35,6 +35,11 @@ pnpm-debug.log*
 *.tiff
 *.zip
 
+# The three application checkpoints are intentionally versioned with Git LFS.
+!model_assets/
+!model_assets/**/
+!model_assets/**/*.pth
+
 # Runtime-generated files
 uploads/
 outputs/

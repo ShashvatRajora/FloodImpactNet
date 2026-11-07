@@ -1,0 +1,37 @@
+{
+  "module": "Module 2 \u2014 Image-Conditioned Residual GAN",
+  "run_name": "FloodImpactNet_Module2_ImageConditionedResidualGAN_v2",
+  "source_dataset": "Sen1Floods11 8-Channel",
+  "training_split": "Module 1 train split only",
+  "source_image_conditioning": true,
+  "global_image_generation": false,
+  "residual_restricted_to_changed_pixels": true,
+  "input_channels": 8,
+  "condition_channels": 3,
+  "condition_definition": [
+    "source flood mask",
+    "target flood mask",
+    "valid-data mask"
+  ],
+  "counterfactual_training_modes": [
+    "synthetic flood recession",
+    "synthetic flood expansion"
+  ],
+  "gpus": 2,
+  "batch_size_per_gpu": 1,
+  "gradient_accumulation_steps": 4,
+  "effective_global_batch_size": 8,
+  "epochs": 100,
+  "generator_learning_rate": 0.0001,
+  "discriminator_learning_rate": 0.0001,
+  "seed": 42,
+  "scenario_disclaimer": "Generated images are synthetic counterfactual flood scenarios, not observed satellite acquisitions or verified damage maps.",
+  "counterfactual_training_scenes": 270,
+  "excluded_no_flood_scenes": 32,
+  "excluded_limited_valid_area_scenes": 10,
+  "lambda_segmentation_consistency": 1.5,
+  "lambda_adversarial": 1.0,
+  "lambda_feature_matching": 0.5,
+  "lambda_residual_magnitude": 0.02,
+  "lambda_residual_smoothness": 0.05
+}

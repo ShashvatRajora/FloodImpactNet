@@ -17,6 +17,7 @@ from PIL import Image
 
 APP_ROOT = Path(__file__).resolve().parent.parent
 SOURCE_ROOT = Path(os.getenv("FLOODIMPACTNET_ROOT", APP_ROOT.parent))
+REPOSITORY_MODEL_ROOT = APP_ROOT / "model_assets"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -28,8 +29,16 @@ def locate_bundle(name):
     return matches[0] if matches else SOURCE_ROOT / name
 
 
-MODULE1_ROOT = locate_bundle("FloodImpactNet_Module1_UI_Assets")
-MODULE2_ROOT = locate_bundle("FloodImpactNet_Module2_UI_Assets")
+def model_bundle(module_name, legacy_name, required_file):
+    """Prefer versioned repository weights; retain the old notebook-package fallback."""
+    packaged = REPOSITORY_MODEL_ROOT / module_name
+    if (packaged / required_file).exists():
+        return packaged
+    return locate_bundle(legacy_name)
+
+
+MODULE1_ROOT = model_bundle("module1", "FloodImpactNet_Module1_UI_Assets", "models/best_unet.pth")
+MODULE2_ROOT = model_bundle("module2", "FloodImpactNet_Module2_UI_Assets", "models/best_residual_gan.pth")
 app = Flask(__name__)
 CORS(app)
 

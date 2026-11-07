@@ -157,30 +157,34 @@ FloodImpactNet_App/
 │   └── vite.config.js
 ├── scripts/
 │   └── build_demo_assets.py
+├── model_assets/               # Git LFS: trained checkpoints + model config
 ├── .gitignore
 └── README.md
 ```
 
 ## Local setup
 
-### 1. Place model asset packages beside this repository
+### 1. Clone with Git LFS model weights
 
-Large checkpoints and GeoTIFF products are intentionally not committed to GitHub. Keep the application beside the unzipped notebook packages:
+The three trained checkpoints are versioned in this repository with **Git LFS** (about
+575 MB total). Install [Git LFS](https://git-lfs.com/) once, then clone normally:
 
-```text
-D:\FloodImpactNet\
-├── FloodImpactNet_App\
-├── FloodImpactNet_Module1_UI_Assets\
-├── FloodImpactNet_Module2_UI_Assets (1)\
-└── FloodImpactNet_Module3_UI_Assets\
+```powershell
+git lfs install
+git clone https://github.com/ShashvatRajora/FloodImpactNet.git
+cd FloodImpactNet
+git lfs pull
 ```
 
-The backend discovers these folders automatically. Alternatively, set `FLOODIMPACTNET_ROOT` to their parent directory.
+After that, no downloaded Kaggle package is needed: the backend loads
+`model_assets/module1` and `model_assets/module2` automatically. If an older clone has
+no LFS assets, the backend can still discover the separately unzipped notebook packages
+via `FLOODIMPACTNET_ROOT`.
 
 ### 2. Start Flask
 
 ```powershell
-cd D:\FloodImpactNet\FloodImpactNet_App\backend
+cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
@@ -192,7 +196,7 @@ python app.py
 Open a second PowerShell window:
 
 ```powershell
-cd D:\FloodImpactNet\FloodImpactNet_App\frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -241,4 +245,4 @@ The app is on-demand real-time inference, not continuous streaming. A CPU reques
 - Add buildings, roads, settlement, and population exposure layers.
 - Add depth-damage curves for defensible damage estimation.
 - Calibrate uncertainty with independent real temporal observations.
-- Package checkpoint assets through a controlled release/download process.
+- Publish a model release when a future checkpoint supersedes the Git LFS version.
